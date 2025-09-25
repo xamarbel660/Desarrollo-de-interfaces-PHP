@@ -7,3 +7,5 @@
 .DS_Store
 !/www/.gitkeep
 /.vscode/*
+conf
+.infragenie
