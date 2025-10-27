@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="act4Salario.php" method="get" name="formu">
+        <label for="horas">Horas trabajadas a la semana:</label>
+        <input type="number" name="horas" id="horas" required>
+        <br>
+        <label for="sueldo">Sueldo por hora (opcional):</label>
+        <input type="number" name="sueldo" id="sueldo" default="15">
+        <br>
+        <input type="submit" value="Calcular salario">
+    </form>
+</body>
+</html>
+<!-- Escribe un programa que calcule el salario semanal de un trabajador en base a las horas trabajadas por semana. Se mostrará un formulario con dos cuadros de texto, en uno se indicarán las horas trabajadas a la semana y en el otro el dinero que se paga cada hora. Estos datos se pasarán al servidor que será el que realice cálculos con ellos.
+Si no se indica un sueldo por hora, se pagarán 15 euros por hora como valor por defecto. Haz que el resultado obtenido se multiplique por 4 para obtener el sueldo mensual aproximado. Si se le retiene un 15% de IRPF ¿cuál será el sueldo neto y bruto del trabajador?
+Calcula todos estos datos y muéstralos al usuario como respuesta. -->

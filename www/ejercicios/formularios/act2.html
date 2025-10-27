@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="act2Kill.php" method="get" name="formu">
+        <p>Cantidad de millas por galón</p>
+        <input type="number" name="num" id="num" min="1" max="100"><br>
+        <input type="submit" value="Enviar">
+    </form>
+
+    <script>
+        formu.addEventListener('submit',validarDatos);
+        function validarDatos(event){
+            let numero = frmConversor.num.value.trim();
+
+            if(!isNaN(numero)){
+                alert(numero + "No es un numero");
+                event.preventDefault();
+            }else{
+                
+            }
+
+        }
+    </script>
+</body>
+</html>
+<!--
+Ejercicio 2: Realiza un conversor de millas por galón a kilómetros por litro.
+La cantidad de millas por galón debe introducirse mediante un formulario.
+Antes de mandar el valor al servidor se debe validar que el valor se encuentra entre 1 y 100.
+En el servidor el dato será procesado usando PHP (si sabes cómo hacerlo, prueba a realizar la validación del lado del servidor).
+El resultado de la conversión será mostrado al usuario como respuesta.
+-->
