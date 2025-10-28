@@ -23,6 +23,8 @@ function registrarEventos() {
 
     document.querySelector("#mnuListadoPorPrecio").addEventListener("click",mostrarFormulario)
 
+    document.querySelector("#mnuListadoTipoDeComponente").addEventListener("click",mostrarFormulario)
+
     // Botones
     frmAltaTipo.btnAceptarAltaTipo.addEventListener("click", procesarAltaTipo);
     frmBuscarComponente.btnBuscarComponente.addEventListener("click", procesarBuscarComponente);
@@ -31,6 +33,8 @@ function registrarEventos() {
     frmAltaComponente.btnAceptarAltaComponente.addEventListener("click", procesarAltaComponente);
 
     frmListadoPrecio.btnAceptarListadoPorPrecio.addEventListener("click", procesarListadoPorPrecio);
+    frmListadoTipoDeComponente.btnAceptarfrmListadoTipoDeComponente.addEventListener("click", procesarListadoTipoDeComponente);
+    frmModificarTipo.btnAceptarModTipo.addEventListener("click", procesarModificarTipo);
 }
 
 function mostrarFormulario(oEvento) {
@@ -57,6 +61,10 @@ function mostrarFormulario(oEvento) {
         case "mnuListadoPorPrecio":
             frmListadoPrecio.classList.remove("d-none");
             break;
+        
+        case "mnuListadoTipoDeComponente":
+            frmListadoTipoDeComponente.classList.remove("d-none")
+            break;
     }
 }
 
@@ -68,6 +76,9 @@ function ocultarFormularios() {
     frmAltaComponente.classList.add("d-none");
 
     frmListadoPrecio.classList.add("d-none");
+
+    frmListadoTipoDeComponente.classList.add("d-none");
+    frmModificarTipo.classList.add("d-none");
     // Borrado del contenido de capas con resultados
     document.querySelector("#resultadoBusqueda").innerHTML = "";
     document.querySelector("#listados").innerHTML = "";
@@ -92,7 +103,6 @@ async function procesarListadoComponente() {
     //agregamos el contenido a la capa de listados
     document.querySelector("#listados").innerHTML = listado;
 }
-
 
 async function actualizarDesplegableTipos(idTipoSeleccionado) {
 
@@ -146,6 +156,31 @@ async function procesarBuscarComponente() {
         }
 
     }
+}
+
+async function procesarListadoTipoDeComponente() {
+    // Recuperar tipos
+    let nombreTipo = frmListadoTipoDeComponente.inpTipoDeComponente.value;
+
+    let respuesta = await oEmpresa.listadoTipoDeComponente(nombreTipo);
+
+    let tabla = "<table class='table table-striped' id='listadoTipoDeComponentes'>";
+    tabla += "<thead><tr><th>IDTIPO</th><th>TIPO</th><th>DESCRIPCION</th></tr></thead><tbody>";
+
+    for (let tipo of respuesta.datos) {
+        tabla += "<tr><td>" + tipo.idtipo + "</td>";
+        tabla += "<td>" + tipo.tipo + "</td>";
+        tabla += "<td>" + tipo.descripcion + "</td>";
+        tabla += "<td><button class='btn btn-primary' data-tipo='" + JSON.stringify(tipo) + "'><i class='bi bi-pencil-square'></i></button></td></tr>";
+    }
+
+    tabla += "</tbody></table>";
+
+    // Agregamos el contenido a la capa de listados
+    document.querySelector("#listados").innerHTML = tabla;
+    // Agregar manejador de evento para toda la tabla
+    document.querySelector("#listadoTipoDeComponentes").addEventListener('click', procesarBotonEditarTipo);
+
 }
 
 async function procesarListadoPorTipo() {
@@ -205,6 +240,53 @@ async function procesarListadoPorPrecio() {
 
 }
 
+async function procesarModificarTipo() {
+    // Recuperar datos del formulario frmModificarTipo
+    let idTipo = frmModificarTipo.txtModIdTipo.value.trim();
+    let tipo = frmModificarTipo.txtModTipo.value.trim();
+    let descripcion = frmModificarTipo.txtModDescripcionTipo.value.trim();
+
+    // Validar datos del formulario
+    if (validarModTipo()) {
+        let respuesta = await oEmpresa.modificarTipo(new Tipo(idTipo, tipo, descripcion));
+
+        alert(respuesta.mensaje);
+
+        if (!respuesta.error) { // Si NO hay error
+            //Resetear formulario
+            frmModificarTipo.reset();
+            // Ocultar el formulario
+            frmModificarTipo.classList.add("d-none");
+        }
+
+    }
+}
+
+function procesarBotonEditarTipo(oEvento) {
+    let boton = null;
+
+    // Verificamos si han hecho clic sobre el botón o el icono
+    if (oEvento.target.nodeName == "I" || oEvento.target.nodeName == "button") {
+        if (oEvento.target.nodeName == "I") {
+            // Pulsacion sobre el icono
+            boton = oEvento.target.parentElement; // El padre es el boton
+        } else {
+            boton = oEvento.target;
+        }
+
+        // 1.Ocultar todos los formularios
+        ocultarFormularios();
+        // 2.Mostrar el formulario de modificación de componentes
+        frmModificarTipo.classList.remove("d-none");
+        // 3. Rellenar los datos de este formulario con los del componente
+        let tipo = JSON.parse(boton.dataset.tipo);
+
+        frmModificarTipo.txtModIdTipo.value = tipo.idtipo;
+        frmModificarTipo.txtModTipo.value = tipo.tipo;
+        frmModificarTipo.txtModDescripcionTipo.value = tipo.descripcion;
+    }
+}
+
 function procesarBotonEditarComponente(oEvento) {
     let boton = null;
 
@@ -229,8 +311,6 @@ function procesarBotonEditarComponente(oEvento) {
         frmModificarComponente.txtModDescripcion.value = componente.descripcion;
         frmModificarComponente.txtModPrecio.value = componente.precio;
         actualizarDesplegableTipos(componente.idtipo);
-
-
     }
 }
 
@@ -292,6 +372,34 @@ function validarModComponente() {
     return valido;
 }
 
+function validarModTipo() {
+    // Recuperar datos del formulario frmModificarComponente
+    let idTipo = frmModificarTipo.txtModIdTipo.value.trim();
+    let tipo = frmModificarTipo.txtModTipo.value.trim();
+    let descripcion = frmModificarTipo.txtModDescripcionTipo.value.trim();
+
+    let valido = true;
+    let errores = "";
+
+    if (isNaN(idTipo)) {
+        valido = false;
+        errores += "El identificador de componente debe ser numérico";
+    }
+
+
+    if (tipo.length == 0 || descripcion.length == 0) {
+        valido = false;
+        errores += "El nombre y la descripción no pueden estar vacíos";
+    }
+
+    if (!valido) {
+        // Hay errores
+        alert(errores);
+    }
+
+    return valido;
+}
+
 async function borrarComponente(oEvento) {
     let boton = oEvento.target;
     let idComponente = boton.dataset.idcomponente;
@@ -324,7 +432,6 @@ function validarBuscarComponente() {
 
     return valido;
 }
-
 
 async function procesarAltaTipo() {
     if (validarAltaTipo()) {
@@ -367,7 +474,6 @@ function validarAltaTipo() {
 function mostrarListadoTipo() {
     open("listado_tipos.html ");
 }
-
 
 async function procesarAltaComponente() {
     // Recuperar datos del formulario frmAltaComponente

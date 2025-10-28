@@ -49,7 +49,8 @@
 							</li>
 							<li><a class="dropdown-item" href="#" id="mnuListadoPorTipo">Listado de componente por
 									tipo</a></li>
-							<li><a class="dropdown-item" href="#" id="mnuListadoPorPrecio">Listado de componente por precio</a></li>
+							<li><a class="dropdown-item" href="#" id="mnuListadoPorPrecio">Listado de componente por
+									precio</a></li>
 						</ul>
 					</li>
 					<li class="nav-item dropdown">
@@ -64,6 +65,11 @@
 							</li>
 							<li><a class="dropdown-item" href="#" id="mnuListadoTipo">Listado de tipos de
 									componentes</a></li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+							<li><a class="dropdown-item" href="#" id="mnuListadoTipoDeComponente">Buscar tipo de
+									componente</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -202,7 +208,6 @@
 								class="btn btn-primary" value="Aceptar" />
 						</div>
 					</div>
-
 				</fieldset>
 			</form>
 			<form class="form-horizontal d-none" name="frmAltaComponente" id="frmAltaComponente">
@@ -278,6 +283,68 @@
 					</div>
 				</fieldset>
 			</form>
+			<!-- Listado componenetes por tipo -->
+			<form class="form-horizontal d-none" name="frmListadoTipoDeComponente" id="frmListadoTipoDeComponente">
+				<fieldset>
+					<!-- Form Name -->
+					<legend>Listado de componentes por tipo</legend>
+
+					<div class="form-group">
+						<label class="col-xs-4 control-label" for="lstTipoDeComponente">Tipo</label>
+						<div class="col-xs-4">
+							<input type="text" name="inpTipoDeComponente" id="inpTipoDeComponente"></input>
+						</div>
+					</div>
+
+					<!-- Button -->
+					<div class="form-group">
+						<label class="col-xs-4 control-label" for="btnAceptarfrmListadoTipoDeComponente"></label>
+						<div class="col-xs-4">
+							<input type="button" id="btnAceptarfrmListadoTipoDeComponente"
+								name="btnAceptarfrmListadoTipoDeComponente" class="btn btn-primary" value="Aceptar" />
+						</div>
+					</div>
+				</fieldset>
+			</form>
+			<!-- ModificarTipo -->
+			<form class="form-horizontal d-none" name="frmModificarTipo" id="frmModificarTipo">
+				<fieldset>
+					<!-- Form Name -->
+					<legend>Modificar tipo</legend>
+					<!-- Text input-->
+					<div class="form-group">
+						<label class="col-xs-4 control-label" for="txtModIdTipo">IdTipo</label>
+						<div class="col-xs-4">
+							<input disabled id="txtModIdTipo" name="txtModIdTipo" class="form-control input-md"
+								type="text">
+						</div>
+					</div>
+					<!-- Text input-->
+					<div class="form-group">
+						<label class="col-xs-4 control-label" for="txtModTipo">Nombre del tipo</label>
+						<div class="col-xs-4">
+							<input id="txtModTipo" name="txtModTipo" class="form-control input-md" type="text">
+						</div>
+					</div>
+					<!-- Text input-->
+					<div class="form-group">
+						<label class="col-xs-4 control-label" for="txtModDescripcionTipo">Descripción</label>
+						<div class="col-xs-4">
+							<input id="txtModDescripcionTipo" name="txtModDescripcionTipo" class="form-control input-md"
+								type="text">
+						</div>
+					</div>
+					<!-- Button -->
+					<div class="form-group">
+						<label class="col-xs-4 control-label" for="btnAceptarModTipo"></label>
+						<div class="col-xs-4">
+							<input type="button" id="btnAceptarModTipo" name="btnAceptarModTipo" class="btn btn-primary"
+								value="Aceptar" />
+						</div>
+					</div>
+				</fieldset>
+			</form>
+
 		</div>
 	</div>
 
