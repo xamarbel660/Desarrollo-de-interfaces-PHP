@@ -171,7 +171,9 @@ async function procesarListadoTipoDeComponente() {
         tabla += "<tr><td>" + tipo.idtipo + "</td>";
         tabla += "<td>" + tipo.tipo + "</td>";
         tabla += "<td>" + tipo.descripcion + "</td>";
-        tabla += "<td><button class='btn btn-primary' data-tipo='" + JSON.stringify(tipo) + "'><i class='bi bi-pencil-square'></i></button></td></tr>";
+        //como hago para que si la descripcion tiene comillas no me de error?
+        // tabla += "<td><button class='btn btn-primary' data-tipo='" + JSON.stringify(tipo) + "'><i class='bi bi-pencil-square'></i></button></td></tr>";
+        tabla += "<td><button class='btn btn-primary' data-tipo='" + JSON.stringify(tipo).replace(/'/g, '&#39;') + "'><i class='bi bi-pencil-square'></i></button></td></tr>";
     }
 
     tabla += "</tbody></table>";
