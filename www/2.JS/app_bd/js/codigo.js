@@ -171,7 +171,6 @@ async function procesarListadoTipoDeComponente() {
         tabla += "<tr><td>" + tipo.idtipo + "</td>";
         tabla += "<td>" + tipo.tipo + "</td>";
         tabla += "<td>" + tipo.descripcion + "</td>";
-        //como hago para que si la descripcion tiene comillas no me de error?
         // tabla += "<td><button class='btn btn-primary' data-tipo='" + JSON.stringify(tipo) + "'><i class='bi bi-pencil-square'></i></button></td></tr>";
         tabla += "<td><button class='btn btn-primary' data-tipo='" + JSON.stringify(tipo).replace(/'/g, '&#39;') + "'><i class='bi bi-pencil-square'></i></button></td></tr>";
     }
@@ -268,7 +267,7 @@ function procesarBotonEditarTipo(oEvento) {
     let boton = null;
 
     // Verificamos si han hecho clic sobre el botón o el icono
-    if (oEvento.target.nodeName == "I" || oEvento.target.nodeName == "button") {
+    if (oEvento.target.nodeName == "I" || oEvento.target.nodeName == "BUTTON") {
         if (oEvento.target.nodeName == "I") {
             // Pulsacion sobre el icono
             boton = oEvento.target.parentElement; // El padre es el boton
@@ -293,7 +292,7 @@ function procesarBotonEditarComponente(oEvento) {
     let boton = null;
 
     // Verificamos si han hecho clic sobre el botón o el icono
-    if (oEvento.target.nodeName == "I" || oEvento.target.nodeName == "button") {
+    if (oEvento.target.nodeName == "I" || oEvento.target.nodeName == "BUTTON") {
         if (oEvento.target.nodeName == "I") {
             // Pulsacion sobre el icono
             boton = oEvento.target.parentElement; // El padre es el boton
